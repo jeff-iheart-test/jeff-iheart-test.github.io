@@ -1,10 +1,26 @@
 body {
-  margin: 10vh 0;
+  margin: 10vh 10vw;
 }
-#grid {
+#app {
+  position: relative;
   margin: auto;
-  width: 80vw;
   max-width: 790px;
+}
+.search-input {
+  position: relative;
+  border: 1px solid #bbb;
+  border-radius: 17.5px;
+  height: 35px;
+  display: block;
+  margin: 25px 5px;
+  padding-left: 5px;
+}
+.search-input input {
+  outline: none;
+  border: none;
+  width: calc(100% - 45px);
+  margin: 7px;
+  font-size: 1em;
 }
 #grid .artist {
   display: inline-block;
