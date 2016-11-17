@@ -1,0 +1,9 @@
+body {
+  font-family: sans-serif;
+}
+@media (max-width: 768px) {
+  /* show images in 2x3 grid */
+}
+@media (min-width: 769px) {
+  /* show images in 3x2 grid */
+}
