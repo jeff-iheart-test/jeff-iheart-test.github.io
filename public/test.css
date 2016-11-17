@@ -1,9 +1,38 @@
 body {
-  font-family: sans-serif;
+  margin: 10vh 0;
+}
+#grid {
+  margin: auto;
+  width: 80vw;
+  max-width: 790px;
+}
+#grid .artist {
+  display: inline-block;
+  font: 100 1em sans-serif;
+  padding: 5px;
+}
+#grid .artist h4 {
+  margin: 2px 0;
+}
+#grid .artist small {
+  display: block;
+  height: 33px;
+  overflow: auto;
+  color: #777;
+}
+#grid .artist img {
+  width: 100%;
+  max-width: 250px;
 }
 @media (max-width: 768px) {
   /* show images in 2x3 grid */
+  #grid .artist {
+    width: calc(50% - 10px);
+  }
 }
 @media (min-width: 769px) {
   /* show images in 3x2 grid */
+  #grid .artist {
+    width: calc(33.333% - 10px);
+  }
 }
