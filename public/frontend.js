@@ -1,7 +1,9 @@
 (function() {
   'use strict';
 
-  var grid = document.getElementById('grid'),
+  var timer,
+    grid = document.getElementById('grid'),
+    searchbar = document.getElementById('search-bar'),
     res = [ // sample-data/mock api response body
       {
         'name': 'The Weeknd',
@@ -39,12 +41,25 @@
     elem.className = 'artist';
     name.textContent = obj.name; // || some default
     desc.textContent = obj.description; // || some default
-    img.src = obj['Image url']; // todo function to fix ugly broken img
+    img.src = obj['Image url']; // todo handle broken img
 
     elem.appendChild(img);
     elem.appendChild(name);
     elem.appendChild(desc);
     grid.appendChild(elem);
   });
+
+  function searchArtists() {
+    if(timer) clearTimeout(timer); // don't clobber the network
+    timer = setTimeout(() => {
+      var req = new XMLHttpRequest();
+      // todo req.onreadystatechange = react
+      req.open('POST', 'http://localhost:8000/', true);
+      req.send(this.value);
+    }, 300);
+  }
+
+  searchbar.addEventListener('keyup', searchArtists, false);
+  searchbar.addEventListener('paste', searchArtists, false);
 
 }());
