@@ -9,7 +9,10 @@ const http = require('http');
  * @param res {ServerResponse}
  */
 function getLove(term, res) {
-  var url = `http://api-3283.iheart.com/api/v1/catalog/searchAll?`
+  var opts = {
+    headers: {'Accept': 'application/json'},
+    hostname: 'api-3283.iheart.com',
+    path: `/api/v1/catalog/searchAll?`
     + `keywords=${term}`
     + `&queryTrack=false`
     + `&queryBundle=false`
@@ -19,9 +22,10 @@ function getLove(term, res) {
     + `&queryTalkShow=false`
     + `&queryTalkTheme=false`
     + `&queryKeyword=false`
-    + `&countryCode=US`;
+    + `&countryCode=US`
+  };
 
-  http.get(url, r => {
+  http.get(opts, r => {
     var body = '', raw, artists, tops;
     r.on('data', chunk => body += chunk);
     r.on('end', () => {

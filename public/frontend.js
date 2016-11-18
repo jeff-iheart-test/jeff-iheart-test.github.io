@@ -4,7 +4,7 @@
   var timer,
     grid = document.getElementById('grid'),
     searchbar = document.getElementById('search-bar'),
-    res = [ // sample-data/mock api response body
+    defaults = [ // defualt data
       {
         'name': 'The Weeknd',
         'description': 'Feat. August Alsina, Jeremih and more',
@@ -32,22 +32,39 @@
       }
     ];
 
-  res.forEach(obj => {
-    var
-      elem = document.createElement('div'),
-      name = document.createElement('h4'),
-      desc = document.createElement('small'),
-      img = new Image;
-    elem.className = 'artist';
-    name.textContent = obj.name; // || some default
-    desc.textContent = obj.description; // || some default
-    img.src = obj['Image url']; // todo handle broken img
+  class Grid extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {dataset: defaults};
+    }
 
-    elem.appendChild(img);
-    elem.appendChild(name);
-    elem.appendChild(desc);
-    grid.appendChild(elem);
-  });
+    render() {
+      return (
+        <div>
+          {this.state.dataset.map(artist =>
+            <Artist key={artist.name}
+                    image_url={artist['Image url']}
+                    name={artist.name}
+                    desc={artist.description || ''}/>
+          )}
+        </div>
+      );
+    }
+  }
+
+  class Artist extends React.Component {
+    render() {
+      return (
+        <div className="artist">
+          <img src={this.props.image_url}/>
+          <h4>{this.props.name}</h4>
+          <small>{this.props.desc}</small>
+        </div>
+      );
+    }
+  }
+
+  ReactDOM.render(<Grid/>, document.getElementById('grid'));
 
   function searchArtists() {
     if(timer) clearTimeout(timer); // don't clobber the network
