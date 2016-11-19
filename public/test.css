@@ -15,6 +15,9 @@ body {
   margin: 25px 5px;
   padding-left: 5px;
 }
+.magnifying-glass:after {
+  content: '\1f50d';
+}
 .search-input input {
   outline: none;
   border: none;

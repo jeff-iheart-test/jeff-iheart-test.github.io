@@ -2,8 +2,6 @@
   'use strict';
 
   var timer,
-    grid = document.getElementById('grid'),
-    searchbar = document.getElementById('search-bar'),
     defaults = [ // defualt data
       {
         'name': 'The Weeknd',
@@ -32,51 +30,60 @@
       }
     ];
 
-  class Grid extends React.Component {
+  class App extends React.Component {
     constructor(props) {
       super(props);
+      this.updateArtists = this.updateArtists.bind(this);
       this.state = {dataset: defaults};
     }
 
     render() {
       return (
         <div>
-          {this.state.dataset.map(artist =>
-            <Artist key={artist.name}
-                    image_url={artist['Image url']}
-                    name={artist.name}
-                    desc={artist.description || ''}/>
-          )}
+          <span className="search-input">
+            <i className="magnifying-glass"></i>
+            <input onChange={this.updateArtists}/>
+          </span>
+          <Grid dataset={this.state.dataset}/>
         </div>
       );
     }
+
+    updateArtists(e) {
+      var val = e.target.value;
+      if(timer) clearTimeout(timer); // don't clobber the network
+      timer = setTimeout(() => {     // schedule node service call
+        var req = new XMLHttpRequest();
+        req.onreadystatechange = () => {
+          if(req.readyState === 4 && req.status === 200)
+            this.setState({
+              dataset: JSON.parse(req.response).map(artist => ({
+                "name": artist.artistName,
+                "Image url": `http://iscale.iheart.com/catalog/artist/${artist.artistId}?ops=fit(250,0)`
+              }))
+            });
+        };
+        req.open('POST', 'http://localhost:8000', true);
+        req.send(val);
+      }, 300);
+    }
   }
 
-  class Artist extends React.Component {
+  class Grid extends React.Component {
     render() {
       return (
-        <div className="artist">
-          <img src={this.props.image_url}/>
-          <h4>{this.props.name}</h4>
-          <small>{this.props.desc}</small>
+        <div id="grid">
+          {this.props.dataset.map(artist => (
+            <div className="artist" key={artist.name}>
+              <img src={artist['Image url']}/>
+              <h4>{artist.name}</h4>
+              <small>{artist.description}</small>
+            </div>
+          ))}
         </div>
       );
     }
   }
 
-  ReactDOM.render(<Grid/>, document.getElementById('grid'));
-
-  function searchArtists() {
-    if(timer) clearTimeout(timer); // don't clobber the network
-    timer = setTimeout(() => {
-      var req = new XMLHttpRequest();
-      // todo req.onreadystatechange = react
-      req.open('POST', 'http://localhost:8000/', true);
-      req.send(this.value);
-    }, 300);
-  }
-
-  searchbar.addEventListener('keyup', searchArtists, false);
-  searchbar.addEventListener('paste', searchArtists, false);
-
+  ReactDOM.render(<App/>, document.getElementById('app'));
 }());

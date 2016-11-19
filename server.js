@@ -4,9 +4,10 @@
 const http = require('http');
 
 /**
- *
+ * This calls the iHeart api and ends the passed in ServerResponse with
+ * the top six artists from the response
  * @param term {string} search-input value
- * @param res {ServerResponse}
+ * @param res {ServerResponse} to .end
  */
 function getLove(term, res) {
   var opts = {
@@ -41,7 +42,10 @@ http.Server((req, res) => {
   var body = '';
   req.on('data', chunk => body += chunk);
   req.on('end', () => {
-    res.writeHead(200, {'Content-Type': 'application/json'});
+    res.writeHead(200, {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
+    });
     getLove(body, res);
   });
 }).listen(process.env.PORT || 8000);
