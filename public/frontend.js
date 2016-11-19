@@ -50,7 +50,7 @@
     }
 
     updateArtists(e) {
-      var val = e.target.value;
+      var val = encodeURI(e.target.value);
       if(timer) clearTimeout(timer); // don't clobber the network
       timer = setTimeout(() => {     // schedule node service call
         var req = new XMLHttpRequest();
