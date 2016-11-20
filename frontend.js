@@ -2,32 +2,32 @@
   'use strict';
 
   var timer,
-    nodeUrl = 'http://jeff-iheart-test.herokuapp.com',
+    nodeUrl = 'https://jeff-iheart-test.herokuapp.com',
     defaults = [ // defualt data
       {
         'name': 'The Weeknd',
         'description': 'Feat. August Alsina, Jeremih and more',
-        'Image url': 'http://iscale.iheart.com/catalog/artist/744880?ops=fit(250,0)'
+        'Image url': 'https://iscale.iheart.com/catalog/artist/744880?ops=fit(250,0)'
       }, {
         'name': 'Selena Gomez',
         'description': 'Feat. Ariana Grande, Demi Lovato and more',
-        'Image url': 'http://iscale.iheart.com/catalog/artist/57706?ops=fit(250,0)'
+        'Image url': 'https://iscale.iheart.com/catalog/artist/57706?ops=fit(250,0)'
       }, {
         'name': 'R. City',
         'description': 'Feat. Nelly, Iyaz, Wiz Khalifa and more',
-        'Image url': 'http://iscale.iheart.com/catalog/artist/30005067?ops=fit(250,0)'
+        'Image url': 'https://iscale.iheart.com/catalog/artist/30005067?ops=fit(250,0)'
       }, {
         'name': 'Justin Bieber',
         'description': 'Feat. Shawn Mendes, One Direction and more',
-        'Image url': 'http://iscale.iheart.com/catalog/artist/44368?ops=fit(250,0)'
+        'Image url': 'https://iscale.iheart.com/catalog/artist/44368?ops=fit(250,0)'
       }, {
         'name': 'Major Lazer',
         'description': 'Feat. Iyaz, Dillon Francis & DJ Snake and more',
-        'Image url': 'http://iscale.iheart.com/catalog/artist/43557?ops=fit(250,0)'
+        'Image url': 'https://iscale.iheart.com/catalog/artist/43557?ops=fit(250,0)'
       }, {
         'name': 'Taylor Swift',
         'description': 'Feat. Meghan Trainor, Katy Perry and more',
-        'Image url': 'http://iscale.iheart.com/catalog/artist/33221?ops=fit(250,0)'
+        'Image url': 'https://iscale.iheart.com/catalog/artist/33221?ops=fit(250,0)'
       }
     ];
 
@@ -68,7 +68,7 @@
           this.setState({
             dataset: JSON.parse(req.response).map(artist => ({
               "name": artist.artistName,
-              "Image url": `http://iscale.iheart.com/catalog/artist/${artist.artistId}?ops=fit(250,0)`
+              "Image url": `https://iscale.iheart.com/catalog/artist/${artist.artistId}?ops=fit(250,0)`
             }))
           });
       };
