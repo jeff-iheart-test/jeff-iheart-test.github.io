@@ -2,6 +2,7 @@
   'use strict';
 
   var timer,
+    nodeUrl = 'http://jeff-iheart-test.herokuapp.com',
     defaults = [ // defualt data
       {
         'name': 'The Weeknd',
@@ -71,7 +72,7 @@
             }))
           });
       };
-      req.open('GET', `http://localhost:8000/iheart?${term}`, true);
+      req.open('GET', `${nodeUrl}/iheart?${term}`, true);
       req.send();
     }
   }
