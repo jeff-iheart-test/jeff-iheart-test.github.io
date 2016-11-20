@@ -13,9 +13,13 @@ Make sure you have [node](http://nodejs.org/) installed
       `nodeUrl = 'localhost:8000',`
 
 - open up a terminal, cd into this folder, and run
-   ```
+```
    node server
+```
+
+- open up another terminal, cd into this folder, and run
+```
    python -m SimpleHTTPServer 3000
-   ```
+```
 
 - visit localhost:3000 in your favorite browser
