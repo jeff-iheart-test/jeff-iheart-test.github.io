@@ -3,7 +3,7 @@
 
   var timer,
     nodeUrl = 'https://jeff-iheart-test.herokuapp.com',
-    defaults = [ // defualt data
+    defaults = [
       {
         'name': 'The Weeknd',
         'description': 'Feat. August Alsina, Jeremih and more',

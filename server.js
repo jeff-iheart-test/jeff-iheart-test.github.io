@@ -1,6 +1,3 @@
-/**
- *
- */
 const
   http = require('http'),
   port = process.env.PORT || 8000;
