@@ -33,7 +33,8 @@
   class App extends React.Component {
     constructor(props) {
       super(props);
-      this.updateArtists = this.updateArtists.bind(this);
+      this.fetchArtists = this.fetchArtists.bind(this);
+      this.updateGrid = this.updateGrid.bind(this);
       this.state = {dataset: defaults};
     }
 
@@ -42,30 +43,36 @@
         <div>
           <span className="search-input">
             <i className="magnifying-glass"></i>
-            <input onChange={this.updateArtists}/>
+            <input onChange={this.updateGrid}/>
           </span>
           <Grid dataset={this.state.dataset}/>
         </div>
       );
     }
 
-    updateArtists(e) {
+    updateGrid(e) {
       var val = encodeURI(e.target.value);
-      if(timer) clearTimeout(timer); // don't clobber the network
-      timer = setTimeout(() => {     // schedule node service call
-        var req = new XMLHttpRequest();
-        req.onreadystatechange = () => {
-          if(req.readyState === 4 && req.status === 200)
-            this.setState({
-              dataset: JSON.parse(req.response).map(artist => ({
-                "name": artist.artistName,
-                "Image url": `http://iscale.iheart.com/catalog/artist/${artist.artistId}?ops=fit(250,0)`
-              }))
-            });
-        };
-        req.open('POST', 'http://localhost:8000', true);
-        req.send(val);
-      }, 300);
+      if(timer) clearTimeout(timer); // still typing, don't clobber the network
+      if(val) { // something to search for - plan to call node service
+        timer = setTimeout(() => this.fetchArtists(val), 300);
+      } else {  // empty search-bar, put defaults back
+        this.setState({dataset: defaults});
+      }
+    }
+
+    fetchArtists(val) {
+      var req = new XMLHttpRequest();
+      req.onreadystatechange = () => {
+        if(req.readyState === 4 && req.status === 200)
+          this.setState({
+            dataset: JSON.parse(req.response).map(artist => ({
+              "name": artist.artistName,
+              "Image url": `http://iscale.iheart.com/catalog/artist/${artist.artistId}?ops=fit(250,0)`
+            }))
+          });
+      };
+      req.open('POST', 'http://localhost:8000', true);
+      req.send(val);
     }
   }
 
