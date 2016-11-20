@@ -60,7 +60,7 @@
       }
     }
 
-    fetchArtists(val) {
+    fetchArtists(term) {
       var req = new XMLHttpRequest();
       req.onreadystatechange = () => {
         if(req.readyState === 4 && req.status === 200)
@@ -71,8 +71,8 @@
             }))
           });
       };
-      req.open('POST', 'http://localhost:8000', true);
-      req.send(val);
+      req.open('GET', `http://localhost:8000/iheart?${term}`, true);
+      req.send();
     }
   }
 

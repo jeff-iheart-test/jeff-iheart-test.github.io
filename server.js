@@ -1,7 +1,9 @@
 /**
  *
  */
-const http = require('http');
+const
+  http = require('http'),
+  port = process.env.PORT || 8000;
 
 /**
  * This calls the iHeart api and ends the passed in ServerResponse with
@@ -39,13 +41,12 @@ function getLove(term, res) {
 }
 
 http.Server((req, res) => {
-  var body = '';
-  req.on('data', chunk => body += chunk);
-  req.on('end', () => {
-    res.writeHead(200, {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*'
-    });
-    getLove(body, res);
+  var term = req.url.split('?').pop();
+  res.writeHead(200, {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*'
   });
-}).listen(process.env.PORT || 8000);
+  getLove(term, res);
+}).listen(port, () => {
+  console.log(`reporting for duty on port ${port}`);
+});
